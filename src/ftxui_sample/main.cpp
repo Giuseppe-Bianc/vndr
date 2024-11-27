@@ -1,3 +1,4 @@
+// NOLINTBEGIN(*-include-cleaner)
 #include <array>
 #include <functional>
 #include <iostream>
@@ -247,6 +248,7 @@ void game_iteration_canvas()
     auto &small_bm_pixel =
       small_bm->data().at(static_cast<std::size_t>(elapsed_time.count()) % small_bm->data().size());
 
+    // NOLINTNEXTLINE(*-switch-missing-default-case)
     switch (elapsed_time.count() % 3) {
     case 0:
       small_bm_pixel.R += 11;// NOLINT Magic Number
@@ -347,3 +349,5 @@ int main(int argc, const char **argv)
     spdlog::error("Unhandled exception in main: {}", e.what());
   }
 }
+
+// NOLINTEND(*-include-cleaner)
