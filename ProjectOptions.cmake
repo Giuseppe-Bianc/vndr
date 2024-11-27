@@ -4,7 +4,7 @@ include(CMakeDependentOption)
 include(CheckCXXCompilerFlag)
 
 
-macro(myproject_supports_sanitizers)
+macro(vndr_supports_sanitizers)
   if((CMAKE_CXX_COMPILER_ID MATCHES ".*Clang.*" OR CMAKE_CXX_COMPILER_ID MATCHES ".*GNU.*") AND NOT WIN32)
     set(SUPPORTS_UBSAN ON)
   else()
@@ -18,183 +18,183 @@ macro(myproject_supports_sanitizers)
   endif()
 endmacro()
 
-macro(myproject_setup_options)
-  option(myproject_ENABLE_HARDENING "Enable hardening" ON)
-  option(myproject_ENABLE_COVERAGE "Enable coverage reporting" OFF)
+macro(vndr_setup_options)
+  option(vndr_ENABLE_HARDENING "Enable hardening" ON)
+  option(vndr_ENABLE_COVERAGE "Enable coverage reporting" OFF)
   cmake_dependent_option(
-    myproject_ENABLE_GLOBAL_HARDENING
+    vndr_ENABLE_GLOBAL_HARDENING
     "Attempt to push hardening options to built dependencies"
     ON
-    myproject_ENABLE_HARDENING
+    vndr_ENABLE_HARDENING
     OFF)
 
-  myproject_supports_sanitizers()
+  vndr_supports_sanitizers()
 
-  if(NOT PROJECT_IS_TOP_LEVEL OR myproject_PACKAGING_MAINTAINER_MODE)
-    option(myproject_ENABLE_IPO "Enable IPO/LTO" OFF)
-    option(myproject_WARNINGS_AS_ERRORS "Treat Warnings As Errors" OFF)
-    option(myproject_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
-    option(myproject_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
-    option(myproject_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
-    option(myproject_ENABLE_CLANG_TIDY "Enable clang-tidy" OFF)
-    option(myproject_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF)
-    option(myproject_ENABLE_PCH "Enable precompiled headers" OFF)
-    option(myproject_ENABLE_CACHE "Enable ccache" OFF)
+  if(NOT PROJECT_IS_TOP_LEVEL OR vndr_PACKAGING_MAINTAINER_MODE)
+    option(vndr_ENABLE_IPO "Enable IPO/LTO" OFF)
+    option(vndr_WARNINGS_AS_ERRORS "Treat Warnings As Errors" OFF)
+    option(vndr_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
+    option(vndr_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" OFF)
+    option(vndr_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
+    option(vndr_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" OFF)
+    option(vndr_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
+    option(vndr_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
+    option(vndr_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
+    option(vndr_ENABLE_CLANG_TIDY "Enable clang-tidy" OFF)
+    option(vndr_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF)
+    option(vndr_ENABLE_PCH "Enable precompiled headers" OFF)
+    option(vndr_ENABLE_CACHE "Enable ccache" OFF)
   else()
-    option(myproject_ENABLE_IPO "Enable IPO/LTO" ON)
-    option(myproject_WARNINGS_AS_ERRORS "Treat Warnings As Errors" ON)
-    option(myproject_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
-    option(myproject_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" ${SUPPORTS_ASAN})
-    option(myproject_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" ${SUPPORTS_UBSAN})
-    option(myproject_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
-    option(myproject_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
-    option(myproject_ENABLE_CLANG_TIDY "Enable clang-tidy" ON)
-    option(myproject_ENABLE_CPPCHECK "Enable cpp-check analysis" ON)
-    option(myproject_ENABLE_PCH "Enable precompiled headers" OFF)
-    option(myproject_ENABLE_CACHE "Enable ccache" ON)
+    option(vndr_ENABLE_IPO "Enable IPO/LTO" ON)
+    option(vndr_WARNINGS_AS_ERRORS "Treat Warnings As Errors" ON)
+    option(vndr_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
+    option(vndr_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" ${SUPPORTS_ASAN})
+    option(vndr_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
+    option(vndr_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" ${SUPPORTS_UBSAN})
+    option(vndr_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
+    option(vndr_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
+    option(vndr_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
+    option(vndr_ENABLE_CLANG_TIDY "Enable clang-tidy" ON)
+    option(vndr_ENABLE_CPPCHECK "Enable cpp-check analysis" ON)
+    option(vndr_ENABLE_PCH "Enable precompiled headers" OFF)
+    option(vndr_ENABLE_CACHE "Enable ccache" ON)
   endif()
 
   if(NOT PROJECT_IS_TOP_LEVEL)
     mark_as_advanced(
-      myproject_ENABLE_IPO
-      myproject_WARNINGS_AS_ERRORS
-      myproject_ENABLE_USER_LINKER
-      myproject_ENABLE_SANITIZER_ADDRESS
-      myproject_ENABLE_SANITIZER_LEAK
-      myproject_ENABLE_SANITIZER_UNDEFINED
-      myproject_ENABLE_SANITIZER_THREAD
-      myproject_ENABLE_SANITIZER_MEMORY
-      myproject_ENABLE_UNITY_BUILD
-      myproject_ENABLE_CLANG_TIDY
-      myproject_ENABLE_CPPCHECK
-      myproject_ENABLE_COVERAGE
-      myproject_ENABLE_PCH
-      myproject_ENABLE_CACHE)
+      vndr_ENABLE_IPO
+      vndr_WARNINGS_AS_ERRORS
+      vndr_ENABLE_USER_LINKER
+      vndr_ENABLE_SANITIZER_ADDRESS
+      vndr_ENABLE_SANITIZER_LEAK
+      vndr_ENABLE_SANITIZER_UNDEFINED
+      vndr_ENABLE_SANITIZER_THREAD
+      vndr_ENABLE_SANITIZER_MEMORY
+      vndr_ENABLE_UNITY_BUILD
+      vndr_ENABLE_CLANG_TIDY
+      vndr_ENABLE_CPPCHECK
+      vndr_ENABLE_COVERAGE
+      vndr_ENABLE_PCH
+      vndr_ENABLE_CACHE)
   endif()
 
-  myproject_check_libfuzzer_support(LIBFUZZER_SUPPORTED)
-  if(LIBFUZZER_SUPPORTED AND (myproject_ENABLE_SANITIZER_ADDRESS OR myproject_ENABLE_SANITIZER_THREAD OR myproject_ENABLE_SANITIZER_UNDEFINED))
+  vndr_check_libfuzzer_support(LIBFUZZER_SUPPORTED)
+  if(LIBFUZZER_SUPPORTED AND (vndr_ENABLE_SANITIZER_ADDRESS OR vndr_ENABLE_SANITIZER_THREAD OR vndr_ENABLE_SANITIZER_UNDEFINED))
     set(DEFAULT_FUZZER ON)
   else()
     set(DEFAULT_FUZZER OFF)
   endif()
 
-  option(myproject_BUILD_FUZZ_TESTS "Enable fuzz testing executable" ${DEFAULT_FUZZER})
+  option(vndr_BUILD_FUZZ_TESTS "Enable fuzz testing executable" ${DEFAULT_FUZZER})
 
 endmacro()
 
-macro(myproject_global_options)
-  if(myproject_ENABLE_IPO)
+macro(vndr_global_options)
+  if(vndr_ENABLE_IPO)
     include(cmake/InterproceduralOptimization.cmake)
-    myproject_enable_ipo()
+    vndr_enable_ipo()
   endif()
 
-  myproject_supports_sanitizers()
+  vndr_supports_sanitizers()
 
-  if(myproject_ENABLE_HARDENING AND myproject_ENABLE_GLOBAL_HARDENING)
+  if(vndr_ENABLE_HARDENING AND vndr_ENABLE_GLOBAL_HARDENING)
     include(cmake/Hardening.cmake)
     if(NOT SUPPORTS_UBSAN 
-       OR myproject_ENABLE_SANITIZER_UNDEFINED
-       OR myproject_ENABLE_SANITIZER_ADDRESS
-       OR myproject_ENABLE_SANITIZER_THREAD
-       OR myproject_ENABLE_SANITIZER_LEAK)
+       OR vndr_ENABLE_SANITIZER_UNDEFINED
+       OR vndr_ENABLE_SANITIZER_ADDRESS
+       OR vndr_ENABLE_SANITIZER_THREAD
+       OR vndr_ENABLE_SANITIZER_LEAK)
       set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
     else()
       set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
     endif()
-    message("${myproject_ENABLE_HARDENING} ${ENABLE_UBSAN_MINIMAL_RUNTIME} ${myproject_ENABLE_SANITIZER_UNDEFINED}")
-    myproject_enable_hardening(myproject_options ON ${ENABLE_UBSAN_MINIMAL_RUNTIME})
+    message("${vndr_ENABLE_HARDENING} ${ENABLE_UBSAN_MINIMAL_RUNTIME} ${vndr_ENABLE_SANITIZER_UNDEFINED}")
+    vndr_enable_hardening(vndr_options ON ${ENABLE_UBSAN_MINIMAL_RUNTIME})
   endif()
 endmacro()
 
-macro(myproject_local_options)
+macro(vndr_local_options)
   if(PROJECT_IS_TOP_LEVEL)
     include(cmake/StandardProjectSettings.cmake)
   endif()
 
-  add_library(myproject_warnings INTERFACE)
-  add_library(myproject_options INTERFACE)
+  add_library(vndr_warnings INTERFACE)
+  add_library(vndr_options INTERFACE)
 
   include(cmake/CompilerWarnings.cmake)
-  myproject_set_project_warnings(
-    myproject_warnings
-    ${myproject_WARNINGS_AS_ERRORS}
+  vndr_set_project_warnings(
+    vndr_warnings
+    ${vndr_WARNINGS_AS_ERRORS}
     ""
     ""
     ""
     "")
 
-  if(myproject_ENABLE_USER_LINKER)
+  if(vndr_ENABLE_USER_LINKER)
     include(cmake/Linker.cmake)
-    myproject_configure_linker(myproject_options)
+    vndr_configure_linker(vndr_options)
   endif()
 
   include(cmake/Sanitizers.cmake)
-  myproject_enable_sanitizers(
-    myproject_options
-    ${myproject_ENABLE_SANITIZER_ADDRESS}
-    ${myproject_ENABLE_SANITIZER_LEAK}
-    ${myproject_ENABLE_SANITIZER_UNDEFINED}
-    ${myproject_ENABLE_SANITIZER_THREAD}
-    ${myproject_ENABLE_SANITIZER_MEMORY})
+  vndr_enable_sanitizers(
+    vndr_options
+    ${vndr_ENABLE_SANITIZER_ADDRESS}
+    ${vndr_ENABLE_SANITIZER_LEAK}
+    ${vndr_ENABLE_SANITIZER_UNDEFINED}
+    ${vndr_ENABLE_SANITIZER_THREAD}
+    ${vndr_ENABLE_SANITIZER_MEMORY})
 
-  set_target_properties(myproject_options PROPERTIES UNITY_BUILD ${myproject_ENABLE_UNITY_BUILD})
+  set_target_properties(vndr_options PROPERTIES UNITY_BUILD ${vndr_ENABLE_UNITY_BUILD})
 
-  if(myproject_ENABLE_PCH)
+  if(vndr_ENABLE_PCH)
     target_precompile_headers(
-      myproject_options
+      vndr_options
       INTERFACE
       <vector>
       <string>
       <utility>)
   endif()
 
-  if(myproject_ENABLE_CACHE)
+  if(vndr_ENABLE_CACHE)
     include(cmake/Cache.cmake)
-    myproject_enable_cache()
+    vndr_enable_cache()
   endif()
 
   include(cmake/StaticAnalyzers.cmake)
-  if(myproject_ENABLE_CLANG_TIDY)
-    myproject_enable_clang_tidy(myproject_options ${myproject_WARNINGS_AS_ERRORS})
+  if(vndr_ENABLE_CLANG_TIDY)
+    vndr_enable_clang_tidy(vndr_options ${vndr_WARNINGS_AS_ERRORS})
   endif()
 
-  if(myproject_ENABLE_CPPCHECK)
-    myproject_enable_cppcheck(${myproject_WARNINGS_AS_ERRORS} "" # override cppcheck options
+  if(vndr_ENABLE_CPPCHECK)
+    vndr_enable_cppcheck(${vndr_WARNINGS_AS_ERRORS} "" # override cppcheck options
     )
   endif()
 
-  if(myproject_ENABLE_COVERAGE)
+  if(vndr_ENABLE_COVERAGE)
     include(cmake/Tests.cmake)
-    myproject_enable_coverage(myproject_options)
+    vndr_enable_coverage(vndr_options)
   endif()
 
-  if(myproject_WARNINGS_AS_ERRORS)
+  if(vndr_WARNINGS_AS_ERRORS)
     check_cxx_compiler_flag("-Wl,--fatal-warnings" LINKER_FATAL_WARNINGS)
     if(LINKER_FATAL_WARNINGS)
       # This is not working consistently, so disabling for now
-      # target_link_options(myproject_options INTERFACE -Wl,--fatal-warnings)
+      # target_link_options(vndr_options INTERFACE -Wl,--fatal-warnings)
     endif()
   endif()
 
-  if(myproject_ENABLE_HARDENING AND NOT myproject_ENABLE_GLOBAL_HARDENING)
+  if(vndr_ENABLE_HARDENING AND NOT vndr_ENABLE_GLOBAL_HARDENING)
     include(cmake/Hardening.cmake)
     if(NOT SUPPORTS_UBSAN 
-       OR myproject_ENABLE_SANITIZER_UNDEFINED
-       OR myproject_ENABLE_SANITIZER_ADDRESS
-       OR myproject_ENABLE_SANITIZER_THREAD
-       OR myproject_ENABLE_SANITIZER_LEAK)
+       OR vndr_ENABLE_SANITIZER_UNDEFINED
+       OR vndr_ENABLE_SANITIZER_ADDRESS
+       OR vndr_ENABLE_SANITIZER_THREAD
+       OR vndr_ENABLE_SANITIZER_LEAK)
       set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
     else()
       set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
     endif()
-    myproject_enable_hardening(myproject_options OFF ${ENABLE_UBSAN_MINIMAL_RUNTIME})
+    vndr_enable_hardening(vndr_options OFF ${ENABLE_UBSAN_MINIMAL_RUNTIME})
   endif()
 
 endmacro()
