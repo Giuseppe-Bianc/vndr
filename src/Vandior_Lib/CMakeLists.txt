@@ -33,6 +33,7 @@ set(RUST_LIB "${RUST_LIB_DIR}/rsvandior/target/release/rsvandior.lib")
 # Include paths (if your Rust library needs headers, though it generally doesn't)
 include_directories(${RUST_LIB_DIR})
 
+# if  on  windows add the lib Ws2_32 to the linker
 
 target_link_libraries(vandior_lib
         PRIVATE
@@ -43,6 +44,22 @@ target_link_libraries(vandior_lib
         ${RUST_LIB}
         #nlohmann_json::nlohmann_json
 )
+
+if (WIN32)
+    target_link_libraries(vandior_lib PRIVATE Ws2_32
+            Advapi32
+            Ntdll
+            Userenv
+            kernel32.lib
+            user32.lib
+            gdi32.lib
+            winspool.lib
+            shell32.lib
+            ole32.lib
+            oleaut32.lib
+            uuid.lib
+            comdlg32.lib)
+endif ()
 
 target_include_directories(vandior_lib
         PUBLIC

@@ -21,6 +21,7 @@ static auto timeTokenizer(Tokenizer &tokenizer, std::vector<Token> &tokens) -> v
 }
 }// namespace vnd
 
+
 DISABLE_WARNINGS_PUSH(26461 26821)
 
 // static inline constexpr auto sequence = std::views::iota(0, 9999);
@@ -66,8 +67,13 @@ auto main(int argc, const char *const argv[]) -> int
     std::vector<vnd::Token> tokens;
     vnd::timeTokenizer(tokenizer, tokens);
     LINFO("num tokens {}", tokens.size());
-
-    std::string input;
+    auto tokensVecbt = vnd::wrap_tokenize(porfilename, code);
+    auto tokensVec = to_vector_vnd_tokens(tokensVecbt);
+    LINFO("num tokens {} from vnd::wrap_tokenize", tokensVecbt.size());
+        for (const auto &[index, token] : enumerate(tokensVec)) {
+          LINFO("{}", token);
+        }
+    /*std::string input;
     std::getline(std::cin, input);
     LINFO("Input: {}", input);
     vnd::Parser parser{ input, "input.vn" };
@@ -84,12 +90,8 @@ auto main(int argc, const char *const argv[]) -> int
         node ? prettyPrint(*node) : LINFO("EMPTY");
       }
     }
-    auto sum = add_numbers(10, 5);
-    auto diff = subtract_numbers(20, 8);
-    LINFO("rusct code Sum: {}", sum);
-    LINFO("rustc Difference: {}", diff);
     vnd::Transpiler transpiler{ input, filename };
-    transpiler.transpile();
+    transpiler.transpile();*/
   } catch (const std::exception &e) {
     // Handle any other types of exceptions
     LERROR("Unhandled exception in main: {}", e.what());

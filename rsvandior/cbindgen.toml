@@ -34,12 +34,13 @@ after_includes = ""
 
 braces = "SameLine"
 line_length = 100
-tab_width = 2
+tab_width = 4
 documentation = true
 documentation_style = "auto"
 documentation_length = "full"
-line_endings = "LF" # also "CR", "CRLF", "Native"
-
+line_endings = "Native" # also "CR", "CRLF", "Native"
+pragma_once = true
+cpp_compat = true
 
 
 
@@ -95,13 +96,14 @@ rename_fields = "None"
 # must_use = "MUST_USE_STRUCT"
 # deprecated = "DEPRECATED_STRUCT"
 # deprecated_with_note = "DEPRECATED_STRUCT_WITH_NOTE"
-derive_constructor = false
-derive_eq = false
+derive_constructor = true
+derive_eq = true
 derive_neq = false
-derive_lt = false
+derive_lt = true
 derive_lte = false
-derive_gt = false
+derive_gt = true
 derive_gte = false
+#enum_class = true
 
 
 
@@ -126,8 +128,23 @@ private_default_tagged_enum_constructor = false
 
 
 [const]
+# Whether a generated constant can be a static const in C++ mode. I have no
+# idea why you would turn this off.
+#
+# default: true
 allow_static_const = true
+
+# Whether a generated constant can be constexpr in C++ mode.
+#
+# default: true
 allow_constexpr = false
+
+# This rule specifies the order in which constants will be sorted.
+#
+# "Name": sort by the name of the constant
+# "None": keep order in which the constants have been parsed
+#
+# default: "None"
 sort_by = "Name"
 
 
