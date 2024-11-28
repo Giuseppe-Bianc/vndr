@@ -1,0 +1,22 @@
+add_executable(vandior main.cpp
+        Costanti.hpp)
+
+
+# Retrieve the target name
+get_target_property(target_name vandior NAME)
+include("${CMAKE_SOURCE_DIR}/cmake/Simd.cmake")
+set_simd_instructions(${target_name})
+
+target_link_libraries(
+        vandior
+        PRIVATE vndr::vndr_options
+        vndr::vndr_warnings)
+
+target_link_system_libraries(
+        vandior
+        PRIVATE
+        CLI11::CLI11
+        vndr::vandior_lib
+)
+
+target_include_directories(vandior PRIVATE "${CMAKE_BINARY_DIR}/configured_files/include")
